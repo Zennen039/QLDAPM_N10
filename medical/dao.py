@@ -562,7 +562,7 @@ def update_appointment_status(appointment_id, status, cancel_reason=None):
                 ua.schedule.is_available = True
             db.session.commit()
             # Gửi thông báo cho bệnh nhân
-            add_notification(ua.patient_id, f"Lịch hẹn của {ua.id} đã bị hủy. Lý do: {cancel_reason}",
+            add_notification(ua.patient_id, f"Lịch hẹn {ua.id} đã bị hủy. Lý do: {cancel_reason}",
                              type='APPOINTMENT')
             # Gửi email cho bệnh nhân
             send_email(ua.patient.email, "Hủy lịch hẹn",
