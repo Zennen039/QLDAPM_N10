@@ -5,6 +5,7 @@ from medical.utils import send_appointment_reminders
 import dao
 import math
 import hashlib
+import uuid
 from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_mail import Message
@@ -475,22 +476,34 @@ def cancel_appointment(appointment_id):
     return redirect(url_for("doctor_appointments"))
 
 
-@app.route("/patient/<int:appointment_id>/pay", methods=["GET", "POST"])
+@app.route("/patient/<int:appointment_id>/pay", methods=["GET"])
 @login_required
 def payment(appointment_id):
     if current_user.user_role != UserRole.PATIENT:
         flash("Không có quyền truy cập!", "danger")
         return redirect(url_for("homepage"))
+    appointment = Appointment.query.get_or_404(appointment_id)
+    return render_template("patient/pay.html", appointment=appointment)
+
+
+@app.route("/api/patient/<int:appointment_id>/pay", methods=["POST"])
+@login_required
+def api_payment(appointment_id):
+    if current_user.user_role != UserRole.PATIENT:
+        return jsonify({"status": 403, "message": "Không có quyền truy cập!"})
 
     appointment = Appointment.query.get_or_404(appointment_id)
+    payment_method = request.json.get("payment_method", "Giả lập")  # MOMO / VNPAY
+    total_price = appointment.fee
 
-    if request.method == "POST":
-        payment_method = request.form.get("payment_method")  # MOMO / VNPAY
-        total_price = appointment.fee
-        dao.add_payment(appointment_id, payment_method=payment_method, total_price=total_price)
-        flash("Khởi tạo thanh toán thành công!", "success")
-        return redirect(url_for("patient_dashboard"))
-    return render_template("patient/pay.html", appointment=appointment)
+    try:
+        transaction_id = str(uuid.uuid4())
+        pa = dao.add_payment(appointment_id, payment_method=payment_method, total_price=total_price,
+                        transaction_id=transaction_id)
+        dao.update_payment_status(pa.id, PaymentStatus.SUCCESS, transaction_id=transaction_id)
+    except Exception as e:
+        return jsonify({"status": 500, "message": str(e)})
+    return jsonify({"status": 200, "message": "Thanh toán thành công!"})
 
 
 @app.route("/patient/payments", methods=["GET"])
@@ -500,7 +513,8 @@ def patient_payments():
         flash("Không có quyền truy cập!", "danger")
         return redirect(url_for("homepage"))
 
-    payments = (Payment.query.join(Appointment).filter(Appointment.patient_id == current_user.id).all())
+    payments = Payment.query.join(Appointment, Payment.appointment_id == Appointment.id).filter(
+        Appointment.patient_id == current_user.id).all()
     return render_template("patient/payments.html", payments=payments)
 
 
@@ -862,7 +876,17 @@ def admin_statistics():
 @login_required
 def notifications():
     notifs = dao.get_notifications(current_user.id)
-    return render_template('admin/notifications.html', notifs=notifs)
+    return render_template('home/notifications.html', notifs=notifs)
+
+
+@app.route('/notis/<int:notification_id>/read', methods=["POST"])
+@login_required
+def mark_notification(notification_id):
+    try:
+        dao.mark_notification_read(notification_id)
+    except Exception as e:
+        return jsonify({"status": 500, "message": str(e)})
+    return jsonify({"status": 200, "message": "Đã đánh dấu đã đọc"})
 
 
 @app.route("/logout")

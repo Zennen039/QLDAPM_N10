@@ -1,0 +1,53 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Thông báo{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h3 class="text-center text-primary mb-4">Thông báo</h3>
+
+    {% if notifs %}
+    <div class="row g-3">
+        {% for n in notifs %}
+        <div class="col-12">
+            <div class="card shadow-sm border-0 {% if not n.is_read %}border-warning{% endif %}">
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <!-- Bên trái -->
+                    <div>
+                        <h6 class="card-title mb-1">{{ n.content }}</h6>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted">{{ n.created_date }}</small>
+
+                            {% if n.type == 'NEW_DOCTOR' %}
+                            <span class="badge bg-primary text-white ms-2 px-3 py-2 rounded-pill">{{ n.type }}</span>
+                            {% elif n.type == 'GENERAL' %}
+                            <span class="badge bg-secondary text-white ms-2 px-3 py-2 rounded-pill">{{ n.type }}</span>
+                            {% else %}
+                            <span class="badge bg-success text-white ms-2 px-3 py-2 rounded-pill">{{ n.type }}</span>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <!-- Bên phải -->
+                    <div>
+                        {% if not n.is_read %}
+                        <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="markRead({{ n.id }})">
+                            Đánh dấu đã đọc
+                        </button>
+                        {% else %}
+                        <span class="badge bg-success fs-6 px-3 py-2 rounded-pill">Đã đọc</span>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">Bạn chưa có thông báo nào.</div>
+    {% endif %}
+</div>
+{% endblock %}

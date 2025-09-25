@@ -14,16 +14,27 @@
                 <th>Phí khám</th>
                 <th>Phương thức</th>
                 <th>Trạng thái</th>
+                <th>Hành động</th>
             </tr>
             </thead>
             <tbody>
             {% for p in payments %}
             <tr>
                 <td>{{ p.transaction_id or "N/A" }}</td>
-                <td>{{ p.appointment.doctor.user.full_name }}</td>
-                <td>{{ p.appointment.start_at }}</td>
-                <td><span class="text-danger fw-bold">{{ "{:,.0f}".format(p.total_price) }} VND</span></td>
-                <td>{{ p.payment_method }}</td>
+                <td>{{ p.appointment.doctor.user.full_name if p.appointment and p.appointment.doctor else "N/A" }}</td>
+                <td>
+                    {% if p.appointment and p.appointment.start_at %}
+                    {{ p.appointment.start_at }}
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="text-danger fw-bold">
+                        {{ "{:,.0f}".format(p.total_price) if p.total_price else "0" }} VND
+                    </span>
+                </td>
+                <td>{{ p.payment_method or "N/A" }}</td>
                 <td>
                     {% if p.status.name == "SUCCESS" %}
                     <span class="badge bg-success">Thành công</span>
@@ -31,6 +42,15 @@
                     <span class="badge bg-danger">Thất bại</span>
                     {% else %}
                     <span class="badge bg-warning text-dark">Đang xử lý</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if p.status.name != "SUCCESS" and p.appointment %}
+                    <button type="button" class="btn btn-sm btn-outline-primary"
+                            onclick="retryPayment({{ p.appointment.id }})">Thanh toán lại
+                    </button>
+                    {% else %}
+                    -
                     {% endif %}
                 </td>
             </tr>
