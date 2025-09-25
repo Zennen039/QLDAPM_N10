@@ -1,0 +1,69 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Cuộc hẹn của tôi{% endblock %}
+
+{% block content %}
+<div class="container my-4 col-lg-8">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+            <h2 class="h4 text-center mb-4 text-primary fw-bold">
+                <i class="fa fa-notes-medical me-2"></i>Danh Sách Cuộc Hẹn Của Bạn
+            </h2>
+
+            {% if appointments %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-center">
+                    <thead class="bg-primary text-white">
+                    <tr>
+                        <th class="text-uppercase small">Bác sĩ</th>
+                        <th class="text-uppercase small">Thời gian bắt đầu</th>
+                        <th class="text-uppercase small">Thời gian kết thúc</th>
+                        <th class="text-uppercase small">Trạng thái</th>
+                        <th class="text-uppercase small">Lý do khám</th>
+                        <th class="text-uppercase small">Thanh toán</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-light">
+                    {% for a in appointments %}
+                    <tr>
+                        <td class="fw-semibold">{{ a.doctor.user.full_name }}</td>
+                        <td>{{ a.start_at }}</td>
+                        <td>{{ a.end_at }}</td>
+                        <td>
+                            {% if a.status.name == 'PENDING' %}
+                            <span class="badge bg-warning text-dark rounded-pill px-3 py-2">Chờ xác nhận</span>
+                            {% elif a.status.name == 'CONFIRMED' %}
+                            <span class="badge bg-info rounded-pill px-3 py-2">Đã xác nhận</span>
+                            {% elif a.status.name == 'CANCELLED' %}
+                            <span class="badge bg-danger rounded-pill px-3 py-2">Đã hủy</span>
+                            {% elif a.status.name == 'COMPLETED' %}
+                            <span class="badge bg-success rounded-pill px-3 py-2">Đã hoàn thành</span>
+                            {% else %}
+                            <span class="badge bg-secondary rounded-pill px-3 py-2">{{ a.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ a.reason }}</td>
+                        <td>
+                            {% if a.status.name == 'PENDING' %}
+                            <a href="{{ url_for('payment', appointment_id=a.id) }}" class="btn btn-outline-info btn-sm">Thanh
+                                toán</a>
+                            {% elif a.status.name == 'COMPLETED' %}
+                            <span class="text-muted">Đã thanh toán</span>
+                            {% else %}
+                            <span class="text-muted">Không cần</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-center text-muted my-3">
+                Bạn chưa đặt cuộc hẹn nào.
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

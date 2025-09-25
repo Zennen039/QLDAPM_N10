@@ -1,0 +1,45 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<div class="container py-4">
+    <h3 class="text-center text-primary mb-4">Lịch sử thanh toán</h3>
+
+    {% if payments %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle shadow-sm">
+            <thead class="table-dark">
+            <tr>
+                <th>Mã giao dịch</th>
+                <th>Bác sĩ</th>
+                <th>Thời gian</th>
+                <th>Phí khám</th>
+                <th>Phương thức</th>
+                <th>Trạng thái</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for p in payments %}
+            <tr>
+                <td>{{ p.transaction_id or "N/A" }}</td>
+                <td>{{ p.appointment.doctor.user.full_name }}</td>
+                <td>{{ p.appointment.start_at }}</td>
+                <td><span class="text-danger fw-bold">{{ "{:,.0f}".format(p.total_price) }} VND</span></td>
+                <td>{{ p.payment_method }}</td>
+                <td>
+                    {% if p.status.name == "SUCCESS" %}
+                    <span class="badge bg-success">Thành công</span>
+                    {% elif p.status.name == "FAILED" %}
+                    <span class="badge bg-danger">Thất bại</span>
+                    {% else %}
+                    <span class="badge bg-warning text-dark">Đang xử lý</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">Bạn chưa có thanh toán nào.</div>
+    {% endif %}
+</div>
+{% endblock %}

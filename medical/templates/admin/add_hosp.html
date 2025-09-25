@@ -1,0 +1,29 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Thêm bệnh viện{% endblock %}
+
+{% block content %}
+<div class="hospital-form-wrapper">
+    <h3 class="mb-3 text-center">Thêm bệnh viện</h3>
+
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Tên bệnh viện</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Địa chỉ</label>
+            <input type="text" name="address" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea name="description" class="form-control" rows="3" required></textarea>
+        </div>
+
+        <button class="btn btn-success">Lưu</button>
+        <a href="{{ url_for('hospital_lists') }}" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+{% endblock %}

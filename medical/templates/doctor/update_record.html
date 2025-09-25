@@ -1,0 +1,50 @@
+{% extends 'layout/base.html' %}
+{% block title %}Cập nhật bệnh án{% endblock %}
+
+{% block content %}
+<div class="container my-4 col-lg-8">
+    <div class="card shadow border-0 rounded-4">
+        <div class="card-body p-4">
+            <h3 class="text-primary fw-bold mb-4">
+                <i class="fa fa-edit me-2"></i> Cập nhật bệnh án
+            </h3>
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="symptoms" class="form-label">Triệu chứng</label>
+                    <textarea class="form-control" id="symptoms" name="symptoms"
+                              rows="3">{{ record.symptoms }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="diagnosis" class="form-label">Chẩn đoán</label>
+                    <textarea class="form-control" id="diagnosis" name="diagnosis"
+                              rows="3">{{ record.diagnosis }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="test_results" class="form-label">Kết quả xét nghiệm</label>
+                    <textarea class="form-control" id="test_results" name="test_results" rows="3">{{ record.test_results }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="medical_history" class="form-label">Tiền sử bệnh</label>
+                    <textarea class="form-control" id="medical_history" name="medical_history" rows="3">{{ record.medical_history }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="file" class="form-label">File đính kèm</label>
+                    <input class="form-control" type="file" id="file" name="file">
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-save me-1"></i> Lưu thay đổi
+                </button>
+                <a href="{{ url_for('doctor_appointments') }}" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left me-1"></i> Quay lại
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

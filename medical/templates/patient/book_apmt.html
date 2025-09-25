@@ -1,0 +1,66 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h3 class="card-title text-center text-primary mb-4">Đặt lịch hẹn</h3>
+
+                    <form method="post" action="{{ url_for('book_appointment', doctor_id=doctor.user.id) }}">
+
+                        <!-- Thông tin bác sĩ -->
+                        <div class="mb-3">
+                            <label class="form-label">Bác sĩ</label>
+                            <input type="text" class="form-control"
+                                   value="{{ doctor.user.full_name }} - {{ doctor.specialty.name }}" readonly>
+                        </div>
+
+                        <!-- Chọn lịch làm việc -->
+                        <div class="mb-3">
+                            <label for="schedule_id" class="form-label">Chọn lịch làm việc (gợi ý)</label>
+                            {% if schedules %}
+                            <select id="schedule_id" name="schedule_id" class="form-select">
+                                <option value="">-- Không chọn nếu muốn nhập thời gian tùy chỉnh --</option>
+                                {% for s in schedules %}
+                                <option value="{{ s.id }}">
+                                    {{ s.date }} | {{ s.start_time }} - {{ s.end_time }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            {% else %}
+                            <p class="text-danger">Hiện tại bác sĩ không có lịch rảnh.</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Thời gian tùy chỉnh -->
+                        <div class="mb-3">
+                            <label for="start_at" class="form-label">Thời gian bắt đầu (nếu không chọn lịch)</label>
+                            <input type="datetime-local" id="start_at" name="start_at" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="end_at" class="form-label">Thời gian kết thúc (nếu không chọn lịch)</label>
+                            <input type="datetime-local" id="end_at" name="end_at" class="form-control">
+                        </div>
+
+                        <!-- Lý do khám -->
+                        <div class="mb-3">
+                            <label for="reason" class="form-label">Lý do khám</label>
+                            <textarea id="reason" name="reason" class="form-control" rows="3"
+                                      placeholder="Nhập lý do khám..." required></textarea>
+                        </div>
+
+                        <!-- Nút submit -->
+                        <button type="submit" class="btn btn-primary w-100">Xác nhận đặt lịch</button>
+
+                        <a href="{{ url_for('choose_doctor') }}" class="btn btn-outline-secondary w-100 mt-2">Quay
+                            lại</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

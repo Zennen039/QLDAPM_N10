@@ -1,0 +1,24 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Sửa chuyên khoa{% endblock %}
+
+{% block content %}
+<div class="specialty-form-wrapper">
+    <h3 class="mb-3 text-center">Sửa chuyên khoa</h3>
+
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Tên chuyên khoa</label>
+            <input type="text" name="name" class="form-control" value="{{ specialty.name }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea name="description" class="form-control" rows="4">{{ specialty.description }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <a href="{{ url_for('specialties_list') }}" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+{% endblock %}

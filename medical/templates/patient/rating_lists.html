@@ -1,0 +1,42 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<div class="container py-4">
+    <h2 class="text-center text-primary mb-4">Danh sách lịch hẹn đã hoàn thành</h2>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle shadow-sm rounded">
+            <thead class="table-primary text-center">
+            <tr>
+                <th>Bác sĩ</th>
+                <th>Chuyên khoa</th>
+                <th>Ngày và Thời gian</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            {% for apmt in completed %}
+            <tr>
+                <td><strong>{{ apmt.doctor.user.full_name }}</strong></td>
+                <td>{{ apmt.doctor.specialty }}</td>
+                <td>{{ apmt.start_at }} - {{ apmt.end_at }}</td>
+                <td>
+                    <a href="{{ url_for('rating_appointment', appointment_id=apmt.id) }}"
+                       class="btn btn-sm btn-outline-warning d-flex align-items-center justify-content-center gap-1">
+                        <i class="fa fa-star"></i> Đánh giá
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-muted">Không có lịch hẹn nào đã hoàn thành.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center mt-3">
+        <a href="{{ url_for('patient_dashboard') }}" class="btn btn-outline-secondary px-4">Quay lại Dashboard</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<div class="container mt-4 form-container">
+    <h2>Cập nhật thông tin cá nhân</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-grid">
+
+            <!-- Cột trái: Thông tin chung -->
+            <div>
+                <h4>Thông tin chung</h4>
+
+                <div class="mb-3">
+                    <label>Họ tên</label>
+                    <input type="text" name="full_name" class="form-control" value="{{ user.full_name }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Ngày sinh</label>
+                    <input type="date" name="date_of_birth" class="form-control" value="{{ user.date_of_birth }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Giới tính</label>
+                    <input type="text" name="gender" class="form-control" value="{{ user.gender }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" value="{{ user.email }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Số điện thoại</label>
+                    <input type="text" name="phone" class="form-control" value="{{ user.phone }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Địa chỉ</label>
+                    <input type="text" name="address" class="form-control" value="{{ user.address }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Ảnh đại diện</label>
+                    <input type="file" name="avatar" class="form-control" value="{{ user.avatar }}">
+                </div>
+            </div>
+
+            <!-- Cột phải: Thông tin y tế -->
+            <div>
+                <h4>Thông tin y tế</h4>
+
+                <div class="mb-3">
+                    <label>Nhóm máu</label>
+                    <input type="text" name="blood_type" class="form-control" value="{{ profile.blood_type or '' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Số BHYT</label>
+                    <input type="text" name="insurance_number" class="form-control"
+                           value="{{ profile.insurance_number or '' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Liên hệ khẩn cấp</label>
+                    <input type="text" name="emergency_contact" class="form-control"
+                           value="{{ profile.emergency_contact or '' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Dị ứng</label>
+                    <textarea name="allergies" class="form-control">{{ profile.allergies or '' }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Bệnh mãn tính</label>
+                    <textarea name="chronic_diseases"
+                              class="form-control">{{ profile.chronic_diseases or '' }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Tiểu sử bệnh lý</label>
+                    <textarea name="disease_description"
+                              class="form-control">{{ profile.disease_description or '' }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Kết quả xét nghiệm</label>
+                    <textarea name="test_results" class="form-control">{{ profile.test_results or '' }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>File xét nghiệm</label>
+                    <input type="file" name="file" class="form-control" value="{{ profile.file or '' }}">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Nút nằm dưới, căn giữa -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success">Lưu</button>
+            <a href="{{ url_for('patient_profile') }}" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<div class="container mt-4 form-container">
+    <h2>Cập nhật thông tin cá nhân bác sĩ</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-grid">
+
+            <!-- Cột trái: Thông tin chung -->
+            <div>
+                <h4>Thông tin chung</h4>
+
+                <div class="mb-3">
+                    <label>Họ tên</label>
+                    <input type="text" name="full_name" class="form-control" value="{{ user.full_name }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Ngày sinh</label>
+                    <input type="date" name="date_of_birth" class="form-control" value="{{ user.date_of_birth }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Giới tính</label>
+                    <input type="text" name="gender" class="form-control" value="{{ user.gender }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" value="{{ user.email }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Số điện thoại</label>
+                    <input type="text" name="phone" class="form-control" value="{{ user.phone }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Địa chỉ</label>
+                    <input type="text" name="address" class="form-control" value="{{ user.address }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Ảnh đại diện</label>
+                    <input type="file" name="avatar" class="form-control" value="{{ user.avatar }}">
+                </div>
+            </div>
+
+            <!-- Cột phải: Thông tin chuyên môn -->
+            <div>
+                <h4>Thông tin chuyên môn</h4>
+
+                <div class="mb-3">
+                    <label>Chuyên khoa</label>
+                    <input type="text" name="specialty" class="form-control"
+                           value="{{ profile.specialty.name if profile and profile.specialty else '' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Nơi công tác</label>
+                    <input type="text" name="hospital" class="form-control"
+                           value="{{ profile.hospital.name if profile and profile.hospital else '' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Học vị</label>
+                    <input type="text" name="academic_degree" class="form-control"
+                           value="{{ profile.academic_degree or '' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label>Giấy phép hành nghề</label>
+                    <input type="file" name="license_file" class="form-control"
+                           value="{{ profile.license_file or '' }}">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Nút nằm dưới, căn giữa -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success">Lưu</button>
+            <a href="{{ url_for('view_doctor_profile') }}" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

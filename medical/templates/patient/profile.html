@@ -1,0 +1,75 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-body">
+            <h2 class="mb-4 text-primary">Thông tin cá nhân</h2>
+
+            <!-- Thông tin chung -->
+            <div class="mb-4">
+                <h4 class="border-bottom pb-2 text-secondary">Thông tin chung</h4>
+                <div class="row">
+                    <div class="col-md-8">
+                        <p><b>Họ tên:</b> {{ user.full_name }}</p>
+                        <p><b>Ngày sinh:</b> {{ user.date_of_birth }}</p>
+                        <p><b>Giới tính:</b> {{ user.gender }}</p>
+                        <p><b>Email:</b> {{ user.email }}</p>
+                        <p><b>Số điện thoại:</b> {{ user.phone }}</p>
+                        <p><b>Địa chỉ:</b> {{ user.address }}</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <b>Ảnh đại diện:</b><br>
+                        {% if user.avatar %}
+                        <a href="{{ user.avatar }}" target="_blank">
+                            <img src="{{ user.avatar }}"
+                                 alt="Ảnh đại diện"
+                                 class="img-thumbnail rounded-circle mt-2"
+                                 style="width: 150px; height: 150px; object-fit: cover;">
+                        </a>
+                        {% else %}
+                        <p class="text-muted mt-2">Chưa có</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin y tế -->
+            <div class="mb-4">
+                <h4 class="border-bottom pb-2 text-secondary">Thông tin y tế</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><b>Nhóm máu:</b> {{ profile.blood_type or "Chưa cập nhật" }}</p>
+                        <p><b>Số BHYT:</b> {{ profile.insurance_number or "Chưa cập nhật" }}</p>
+                        <p><b>Liên hệ khẩn cấp:</b> {{ profile.emergency_contact or "Chưa cập nhật" }}</p>
+                        <p><b>Dị ứng:</b> {{ profile.allergies or "Chưa cập nhật" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><b>Bệnh mãn tính:</b> {{ profile.chronic_diseases or "Chưa cập nhật" }}</p>
+                        <p><b>Tiểu sử bệnh lý:</b> {{ profile.disease_description or "Chưa cập nhật" }}</p>
+                        <p><b>Kết quả xét nghiệm:</b> {{ profile.test_results or "Chưa cập nhật" }}</p>
+                        {% if profile.files %}
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for f in profile.files %}
+                            <a href="{{ f.file_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                📄 Xem file {{ loop.index }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="text-muted">Chưa có file xét nghiệm nào</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút cập nhật -->
+            <div class="text-end">
+                <a href="{{ url_for('update_patient_profile') }}" class="btn btn-primary">
+                    <i class="bi bi-pencil-square"></i> Cập nhật
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

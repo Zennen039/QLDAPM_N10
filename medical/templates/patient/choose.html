@@ -1,0 +1,38 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Chọn bác sĩ{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4 text-center text-primary">Chọn bác sĩ để đặt lịch khám</h2>
+    <div class="row g-4">
+        {% for doctor in doctors %}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ doctor.user.avatar or url_for('static', filename='images/default-avatar.png') }}"
+                     class="card-img-top" alt="Avatar" style="height: 250px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-primary">{{ doctor.user.full_name }}</h5>
+                    <p class="card-text mb-1"><i class="fa fa-envelope"></i> {{ doctor.user.email }}</p>
+                    <p class="card-text mb-1"><i class="fa fa-hospital"></i> {{ doctor.hospital }}</p>
+                    <p class="card-text mb-1"><i class="fa fa-stethoscope"></i> {{ doctor.specialty }}</p>
+                    <!-- Nút xem lịch làm việc -->
+                    <a href="{{ url_for('view_doctor_schedule', doctor_id=doctor.user.id) }}"
+                       class="btn btn-outline-secondary mt-3 w-100">
+                        <i class="fa fa-calendar-week"></i> Xem lịch làm việc
+                    </a>
+
+                    <!-- Chỉ hiện nút đặt lịch nếu bác sĩ có lịch -->
+                    {% if doctor.schedules and doctor.schedules|length > 0 %}
+                    <a href="{{ url_for('book_appointment', doctor_id=doctor.user.id) }}"
+                       class="btn btn-outline-primary mt-2 w-100">
+                        <i class="fa fa-calendar-plus"></i> Đặt lịch khám
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

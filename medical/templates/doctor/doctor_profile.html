@@ -1,0 +1,71 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-body">
+            <h2 class="mb-4 text-primary">Thông tin cá nhân bác sĩ</h2>
+
+            <!-- Thông tin chung -->
+            <div class="mb-4">
+                <h4 class="border-bottom pb-2 text-secondary">Thông tin chung</h4>
+                <div class="row">
+                    <div class="col-md-8">
+                        <p><b>Họ tên:</b> {{ user.full_name }}</p>
+                        <p><b>Ngày sinh:</b> {{ user.date_of_birth }}</p>
+                        <p><b>Giới tính:</b> {{ user.gender }}</p>
+                        <p><b>Email:</b> {{ user.email }}</p>
+                        <p><b>Số điện thoại:</b> {{ user.phone }}</p>
+                        <p><b>Địa chỉ:</b> {{ user.address }}</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <b>Ảnh đại diện:</b><br>
+                        {% if user.avatar %}
+                        <a href="{{ user.avatar }}" target="_blank">
+                            <img src="{{ user.avatar }}"
+                                 alt="Ảnh đại diện"
+                                 class="img-thumbnail rounded-circle mt-2"
+                                 style="width: 150px; height: 150px; object-fit: cover;">
+                        </a>
+                        {% else %}
+                        <p class="text-muted mt-2">Chưa có</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin chuyên môn -->
+            <div class="mb-4">
+                <h4 class="border-bottom pb-2 text-secondary">Thông tin chuyên môn</h4>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><b>Chuyên khoa:</b> {{ profile.specialty.name if profile and profile.specialty else "Chưa cập
+                            nhật" }}</p>
+                        <p><b>Nơi công tác:</b> {{ profile.hospital.name if profile and profile.hospital else "Chưa cập
+                            nhật" }}</p>
+                        <p><b>Học vị:</b> {{ profile.academic_degree or "Chưa cập nhật" }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p><b>Giấy phép hành nghề:</b>
+                            {% if profile.license_file %}
+                            <a href="{{ profile.license_file }}" target="_blank">Xem file</a>
+                            {% else %}
+                            Chưa cập nhật
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút cập nhật -->
+            <div class="text-end">
+                <a href="{{ url_for('update_doctor_profile') }}" class="btn btn-primary">
+                    <i class="bi bi-pencil-square"></i> Cập nhật
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

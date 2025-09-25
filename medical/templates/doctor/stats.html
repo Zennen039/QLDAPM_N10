@@ -1,0 +1,79 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Thống kê bác sĩ{% endblock %}
+
+{% block content %}
+<div class="container my-4 col-lg-10">
+    <h2 class="text-center text-primary mb-4">Thống kê của bạn</h2>
+
+    <!-- Tổng số bệnh nhân -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
+                <h5>Tổng bệnh nhân đã khám</h5>
+                <h2 class="text-success">{{ stats.total_patients }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bệnh lý phổ biến -->
+    <div class="card mb-4 shadow-sm border-0 rounded-4 p-3">
+        <h5>Bệnh lý phổ biến</h5>
+        <table class="table table-hover text-center">
+            <thead class="bg-primary text-white">
+            <tr>
+                <th>Bệnh lý</th>
+                <th>Số lượng</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for disease, count in stats.common_diseases %}
+            <tr>
+                <td>{{ disease }}</td>
+                <td>{{ count }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Lịch hẹn theo tháng (chart) -->
+    <div class="card shadow-sm border-0 rounded-4 p-3">
+        <h5>Lịch hẹn theo tháng</h5>
+        <canvas id="appointmentChart" height="150"></canvas>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('appointmentChart').getContext('2d');
+    const labels = {{ stats.appointment_stats | map(attribute=0) | list | safe }};
+    const data = {{ stats.appointment_stats | map(attribute=1) | list | safe }};
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Số lượng lịch hẹn',
+                data: data,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+{% endblock %}

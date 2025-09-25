@@ -1,0 +1,75 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Tìm kiếm bác sĩ{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="mb-4 text-primary">🔎 Tìm kiếm bác sĩ</h3>
+
+    <!-- Form tìm kiếm -->
+    <form method="get" action="{{ url_for('search') }}" class="row g-3 align-items-end mb-4">
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Tên bác sĩ</label>
+            <input type="text" name="kw" class="form-control" placeholder="Nhập tên bác sĩ...">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label fw-bold">Chuyên khoa</label>
+            <select name="specialty_id" class="form-select">
+                <option value="">-- Tất cả --</option>
+                {% for sp in specialties %}
+                <option value="{{ sp.id }}">{{ sp.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label fw-bold">Bệnh viện</label>
+            <select name="hospital_id" class="form-select">
+                <option value="">-- Tất cả --</option>
+                {% for h in hospitals %}
+                <option value="{{ h.id }}">{{ h.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fa fa-search"></i> Tìm
+            </button>
+        </div>
+    </form>
+
+    <hr>
+
+    <!-- Danh sách bác sĩ -->
+    <div class="row">
+        {% if doctors %}
+        {% for d in doctors %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="{{ d.user.avatar or url_for('static', filename='images/default-doctor.png') }}"
+                     class="card-img-top" alt="Avatar bác sĩ" style="height:220px; object-fit:cover;">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ d.user.full_name }}</h5>
+                    <p class="card-text mb-1"><i class="fa fa-stethoscope"></i> {{ d.specialty.name if d.specialty else
+                        '---' }}</p>
+                    <p class="card-text mb-1"><i class="fa fa-hospital"></i> {{ d.hospital.name if d.hospital else '---'
+                        }}</p>
+                    <p class="card-text mb-1"><i class="fa fa-graduation-cap"></i> {{ d.academic_degree if
+                        d.academic_degree else '---' }}</p>
+                </div>
+                <div class="card-footer text-center bg-light">
+                    <a href="{{ url_for('book_appointment', doctor_id=d.user.id) }}"
+                       class="btn btn-success btn-sm w-100">
+                        <i class="fa fa-calendar"></i> Đặt lịch
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 text-center text-muted">
+            <p>Không tìm thấy bác sĩ nào phù hợp.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

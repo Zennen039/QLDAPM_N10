@@ -1,0 +1,70 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Đổi lịch hẹn{% endblock %}
+
+{% block content %}
+<div class="container my-4 col-lg-6">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+            <h2 class="h4 text-center mb-4 text-primary fw-bold">
+                <i class="fa fa-calendar-alt me-2"></i>Đổi Lịch Hẹn
+            </h2>
+
+            <form method="POST">
+                <!-- Thông tin bệnh nhân -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Bệnh nhân:</label>
+                    <input type="text" class="form-control" value="{{ appointment.patient.full_name }}" disabled>
+                </div>
+
+                <!-- Thông tin bác sĩ -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Bác sĩ:</label>
+                    <input type="text" class="form-control" value="{{ doctor_profile.user.full_name }}" disabled>
+                </div>
+
+                <!-- Thời gian hiện tại -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Thời gian hiện tại:</label>
+                    <input type="text" class="form-control"
+                           value="{{ appointment.start_at }} - {{ appointment.end_at }}" disabled>
+                </div>
+
+                <!-- Chọn khung giờ mới (nếu bạn đã có schedule sẵn) -->
+                {% if doctor_profile.schedules %}
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Chọn khung giờ mới:</label>
+
+                    <select name="new_schedule_id" class="form-select">
+                        {% for s in doctor_profile.schedules %}
+                        <option value="{{ s.id }}">{{ s.start_time }} - {{ s.end_time }} | {{ s.day }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
+                <!-- Hoặc nhập thời gian tùy chỉnh -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Hoặc nhập thời gian mới:</label>
+
+                    <div class="row g-2">
+                        <div class="col">
+                            <input type="datetime-local" name="new_start_time" class="form-control"
+                                   placeholder="Bắt đầu">
+                        </div>
+
+                        <div class="col">
+                            <input type="datetime-local" name="new_end_time" class="form-control"
+                                   placeholder="Kết thúc">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-3">Cập nhật lịch hẹn</button>
+
+                <a href="{{ url_for('doctor_schedules') }}" class="btn btn-secondary w-100 mt-2">Hủy</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

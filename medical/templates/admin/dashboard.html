@@ -1,0 +1,134 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Admin - Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-stethoscope"></i> TDA HealthCare Booking
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a href="{{ url_for('specialties_list') }}"><i class="fa fa-heartbeat"></i> Chuyên khoa</a></li>
+            <li><a href="{{ url_for('hospital_lists') }}"><i class="fa fa-hospital"></i> Bệnh viện</a></li>
+            <li><a href="{{ url_for('admin_doctors') }}"><i class="fa fa-user-md"></i> Phê duyệt bác sĩ</a></li>
+            <li><a href="{{ url_for('admin_statistics') }}"><i class="fa fa-line-chart"></i> Thống kê</a></li>
+            <li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+        </ul>
+
+        <div class="user-profile">
+            <img src="{{ current_user.avatar }}" alt="Admin">
+            <div>
+                <p>{{ current_user.full_name }}</p>
+                <span>{{ current_user.email }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="main-content">
+        <div class="topbar">
+            <h2>Good Morning, {{ current_user.full_name }}</h2>
+            <div class="topbar-actions btn btn-warning">
+                <a href="{{ url_for('notifications') }}"><i class="fa fa-bell"></i></a>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats">
+            <div class="card">
+                <h4>Total Patients</h4>
+                <p class="value">{{ stats.total_users }}</p>
+            </div>
+            <div class="card">
+                <h4>Total Appointments</h4>
+                <p class="value">{{ stats.total_appointments }}</p>
+            </div>
+            <div class="card">
+                <h4>Total Income</h4>
+                <p class="value">${{ "{:,.2f}".format(stats.total_revenue) }}</p>
+            </div>
+        </div>
+
+        <!-- Overview Chart -->
+        <div class="overview-section">
+            <div class="overview">
+                <h3>Revenue by Month</h3>
+                <canvas id="overviewChart" height="250"></canvas>
+            </div>
+
+            <div class="appointments">
+                <h3>Recent Appointments</h3>
+                <ul>
+                    {% for appt in stats.recent_appointments %}
+                    <li>
+                        <img src="{{ appt.patient.avatar }}" alt="avatar" width="40" height="40">
+                        {{ appt.patient.full_name }} <span>{{ appt.start_at }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Patient List -->
+        <div class="patient-list">
+            <h3>Patient List</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Họ và tên</th>
+                    <th>Giới tính</th>
+                    <th>Ngày sinh</th>
+                    <th>Số điện thoại</th>
+                    <th>Đại chỉ</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for p in stats.patients %}
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>{{ p.full_name }}</td>
+                    <td>{{ p.gender }}</td>
+                    <td>{{ p.date_of_birth }}</td>
+                    <td>{{ p.phone }}</td>
+                    <td>{{ p.address }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const labels = {{ stats.revenue_by_month | map(attribute=0) | list | tojson }};
+    const data = {{ stats.revenue_by_month | map(attribute=1) | list | tojson }};
+
+    const ctx = document.getElementById('overviewChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Revenue by Month',
+                data: data,
+                borderColor: '#1e88e5',
+                backgroundColor: 'rgba(30,136,229,0.2)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: true } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+</script>
+{% endblock %}

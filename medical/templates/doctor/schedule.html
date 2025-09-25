@@ -1,0 +1,57 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Lịch làm việc{% endblock %}
+
+{% block content %}
+<div class="container my-4 col-lg-7">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+            <h2 class="h4 text-center mb-4 text-primary fw-bold">
+                <i class="fa fa-calendar-alt me-2"></i>Lịch Làm Việc Của Bạn
+            </h2>
+
+            {% if schedules %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-center">
+                    <thead class="bg-primary text-white">
+                    <tr>
+                        <th class="text-uppercase small">Ngày</th>
+                        <th class="text-uppercase small">Giờ Bắt Đầu</th>
+                        <th class="text-uppercase small">Giờ Kết Thúc</th>
+                        <th class="text-uppercase small">Trạng Thái</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-light">
+                    {% for schedule in schedules %}
+                    <tr>
+                        <td class="fw-semibold">{{ schedule.date }}</td>
+                        <td>{{ schedule.start_time }}</td>
+                        <td>{{ schedule.end_time }}</td>
+                        <td>
+                            {% if schedule.is_available %}
+                            <span class="badge bg-success rounded-pill px-3 py-2 shadow-sm">Còn trống</span>
+                            {% else %}
+                            <span class="badge bg-danger rounded-pill px-3 py-2 shadow-sm">Đã đặt</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-center text-muted my-3">
+                Bạn chưa có lịch làm việc nào được tạo.
+            </p>
+            {% endif %}
+
+            <!-- nút tạo lịch -->
+            <div class="text-end mt-4">
+                <a href="{{ url_for('doctor_add_schedules') }}" class="btn btn-outline-primary rounded-pill px-4">
+                    <i class="fa fa-calendar-plus me-1"></i> Tạo lịch làm việc
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

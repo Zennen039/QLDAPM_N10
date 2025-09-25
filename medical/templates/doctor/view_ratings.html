@@ -1,0 +1,62 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<div class="container py-4">
+    <h3 class="text-center text-primary mb-4 fw-bold">💬 Đánh giá từ bệnh nhân</h3>
+
+    {% if rating %}
+    <div class="accordion" id="ratingsAccordion">
+        {% for r in rating %}
+        <div class="accordion-item shadow-sm mb-2 border-0">
+            <h2 class="accordion-header" id="heading{{ r.id }}">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse{{ r.id }}" aria-expanded="false" aria-controls="collapse{{ r.id }}">
+                    👤 {{ r.appointment.patient.full_name }} —
+                    {% for i in range(r.stars) %}
+                    <i class="fa fa-star text-warning"></i>
+                    {% endfor %}
+
+                    {% for i in range(5 - r.stars) %}
+                    <i class="fa fa-star text-secondary"></i>
+                    {% endfor %}
+                </button>
+            </h2>
+
+            <div id="collapse{{ r.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ r.id }}"
+                 data-bs-parent="#ratingsAccordion">
+                <div class="accordion-body">
+                    <!-- Nhận xét -->
+                    <p class="mb-2"><strong>📝 Nhận xét:</strong> {{ r.comment }}</p>
+
+                    <!-- Phản hồi -->
+                    {% if r.doctor_reply %}
+                    <div class="alert alert-success py-2">
+                        <strong>👨‍⚕️ Phản hồi của bạn:</strong> {{ r.doctor_reply }}
+                    </div>
+                    {% else %}
+                    <form method="post" action="{{ url_for('doctor_reply', rating_id=r.id) }}">
+                        <div class="input-group mt-2">
+                            <input type="text" class="form-control" name="doctor_reply" placeholder="Nhập phản hồi..."
+                                   required>
+                            <button class="btn btn-primary" type="submit">Gửi</button>
+                        </div>
+                    </form>
+                    {% endif %}
+
+                    <!-- Thời gian -->
+                    <div class="text-end">
+                        <small class="text-muted">
+                            🕒 {{ r.created_date if r.created_date else '' }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center shadow-sm">
+        Bạn chưa có đánh giá nào từ bệnh nhân.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

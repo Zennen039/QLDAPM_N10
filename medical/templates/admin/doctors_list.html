@@ -1,0 +1,102 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Quản lý bác sĩ{% endblock %}
+
+{% block content %}
+<div class="doctor-list-wrapper">
+    <h3 class="mb-4">Danh sách bác sĩ</h3>
+
+    <table class="table table-hover table-striped align-middle text-center doctor-table">
+        <thead class="table-header">
+        <tr>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Chuyên khoa</th>
+            <th>Nơi công tác</th>
+            <th>Giấy phép</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for d in doctors %}
+        <tr id="doctors{{ d.id }}">
+            <td>{{ d.user.full_name }}</td>
+            <td>{{ d.user.email }}</td>
+            <td>{{ d.specialty.name if d.specialty else '-' }}</td>
+            <td>{{ d.hospital.name if d.hospital else '-' }}</td>
+            <td>
+                {% if d.license_file %}
+                <a href="{{ d.license_file }}" target="_blank" class="license-link">
+                    Xem giấy phép
+                </a>
+                {% else %}
+                <span class="text-muted">Chưa có</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if d.is_verified %}
+                <span class="badge bg-success">Đã xác thực</span>
+                {% elif d.is_verified is none %}
+                <span class="badge bg-danger">Đã từ chối</span>
+                {% else %}
+                <span class="badge bg-warning text-dark">Chờ xác thực</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if not d.is_verified %}
+                <div class="action-buttons d-flex justify-content-center gap-2">
+                    <!-- Nút xác thực -->
+                    <form action="{{ url_for('verify_doctors', id=d.id) }}" method="post">
+                        <button type="submit" class="btn btn-success btn-sm btn-action"
+                                title="Xác thực bác sĩ">
+                            <i class="fa fa-check-circle"></i>
+                        </button>
+                    </form>
+
+                    <!-- Nút từ chối -->
+                    <button onclick="rejectDoctor({{ d.id }})"
+                            type="button" class="btn btn-danger btn-sm btn-action"
+                            title="Từ chối bác sĩ">
+                        <i class="fa fa-times-circle"></i>
+                    </button>
+                </div>
+
+                <!-- Modal nhập lý do -->
+                <div class="modal fade" id="rejectModal{{ d.id }}" tabindex="-1"
+                     aria-labelledby="rejectModalLabel{{ d.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="rejectModalLabel{{ d.id }}">Lý do từ chối</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Đóng"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="reason{{ d.id }}" class="form-label">Nhập lý do:</label>
+                                    <textarea name="reason" id="reason{{ d.id }}" class="form-control" rows="3"
+                                              required></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Hủy
+                                </button>
+                                <button type="submit" class="btn btn-danger"
+                                        onclick="submitReject({{ d.id }})">Xác nhận từ chối
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Quay lại</a>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Đăng nhập{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <!-- Logo -->
+        <div class="login-logo text-center">
+            <img src="{{ url_for('static', filename='images/logo_fb.png') }}" alt="Logo"/>
+        </div>
+
+        <h2>Đăng nhập</h2>
+
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Tên đăng nhập</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+
+            {% if err_msg %}
+            <div class="alert alert-danger">{{ err_msg }}</div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+
+            <div class="text-center mt-3">
+                <a href="{{ url_for('forgot_password') }}" class="btn-link">Quên mật khẩu?</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

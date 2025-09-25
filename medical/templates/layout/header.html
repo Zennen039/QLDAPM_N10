@@ -1,0 +1,44 @@
+<nav>
+    <ul class="menu">
+        <li><a href="/" class="active">Trang chủ</a></li>
+
+        <li><a href="#">Giới thiệu</a></li>
+
+        {% if current_user.is_authenticated %}
+        {% if current_user.user_role.value == 1 %}
+        <li><a href="{{ url_for('patient_dashboard') }}">Dashboard</a></li>
+        {% endif %}
+
+        {% if current_user.user_role.value == 2 %}
+        <li><a href="{{ url_for('doctor_dashboard') }}">Dashboard</a></li>
+        {% endif %}
+
+        {% if current_user.user_role.value == 3 %}
+        <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+        {% endif %}
+        {% endif %}
+
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link">{{ current_user.full_name }}</a>
+        </li>
+
+        <li><a href="{{ url_for('logout') }}">
+            <i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+        </li>
+
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login_page') }}">
+                <i class="fa fa-sign-in" aria-hidden="true"></i> Đăng nhập
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('register_page') }}">
+                <i class="fa fa-user-plus" aria-hidden="true"></i> Đăng ký
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>

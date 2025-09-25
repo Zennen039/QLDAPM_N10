@@ -1,0 +1,792 @@
+/* Menu */
+.menu {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+  padding: 10px 20px;
+  background: #fff;
+}
+.menu li {
+  position: relative;
+}
+.menu a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px 15px;
+  display: block;
+}
+.menu a.active {
+  color: #1e88e5;
+  font-weight: bold;
+}
+
+/* Hero section */
+.hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5faff, #ffffff);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, #d7ebff 0%, transparent 70%);
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+}
+
+.hero-text h4 {
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #0a4ba7;
+  margin-bottom: 20px;
+}
+
+.hero-text h1 span {
+  color: #007bff;
+}
+
+.hero-text p {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.hero-text .btn {
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 500px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-image img {
+    margin: 0 auto;
+  }
+}
+
+/* Features section */
+.features {
+  background: #f9fbff;
+}
+
+.features h2 {
+  font-weight: 700;
+  color: #0a4ba7;
+}
+
+.feature-box {
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  background: #fff;
+  border-radius: 12px;
+}
+
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #007bff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: 0 5px 15px rgba(0,123,255,0.4);
+}
+
+.feature-box h4 {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.feature-box p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Testimonials section */
+.testimonials {
+  background: #fff;
+}
+
+.testimonials h2 {
+  font-weight: 700;
+  color: #0a4ba7;
+}
+
+.testimonial-box {
+  background: #f9fbff;
+  padding: 25px;
+  margin: 15px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.testimonial-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.testimonial-box p {
+  font-style: italic;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+.testimonial-box h5 {
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: #222;
+}
+
+.testimonial-box span {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Partners section */
+.partners {
+  background: #f0f6ff;
+}
+
+.partners h2 {
+  font-weight: 700;
+  color: #0a4ba7;
+}
+
+.partner-logo {
+  max-width: 150px;
+  height: auto;
+  filter: grayscale(100%);
+  opacity: 0.8;
+  transition: all 0.3s ease-in-out;
+}
+
+.partner-logo:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+  background: #0a4ba7;
+  color: #fff;
+  padding: 50px 0 20px;
+}
+
+.footer h4,
+.footer h5 {
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.footer p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
+.social-icons a {
+  display: inline-block;
+  margin-right: 10px;
+  color: #fff;
+  font-size: 18px;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #ffd700;
+  transform: scale(1.2);
+}
+
+.footer hr {
+  border-color: rgba(255, 255, 255, 0.2);
+  margin: 20px 0;
+}
+
+.footer .text-center {
+  font-size: 13px;
+  color: #ccc;
+}
+
+/* Flex container để nút nằm ngang */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem; /* Khoảng cách giữa các nút */
+}
+
+/* Cho nút có cùng kích thước */
+.action-buttons .btn-action {
+  flex: 1;           /* Nút tự co giãn bằng nhau */
+  min-width: 90px;   /* Đặt chiều rộng tối thiểu */
+  text-align: center;
+}
+
+/* ==== LOGIN FORM ==== */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* căn giữa dọc */
+  background: #f5f7fa;
+  font-family: sans-serif;
+}
+
+.login-box {
+  background: #fff;
+  padding: 40px 35px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: bold;
+  color: #1e88e5;
+}
+
+.login-box .form-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.login-box .form-control {
+  border-radius: 8px;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.login-box .form-control:focus {
+  border-color: #1e88e5;
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.15);
+}
+
+.login-box .btn-primary {
+  background: #1e88e5;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.login-box .btn-primary:hover {
+  background: #1565c0;
+}
+
+.login-box .btn-link {
+  text-decoration: none;
+  font-size: 14px;
+  color: #1e88e5;
+}
+
+.login-box .btn-link:hover {
+  text-decoration: underline;
+}
+
+/* Logo trong form đăng nhập */
+.login-logo img {
+  width: 70px;            /* chỉnh kích thước theo ý */
+  margin-bottom: 15px;
+  border-radius: 50%;     /* bo tròn logo */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Form đăng ký */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 0;
+}
+
+.register-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.register-box h3 {
+  font-weight: 600;
+  color: #333;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+input.form-control,
+select.form-select {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Button */
+button[type="submit"] {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* Link dưới cùng */
+.register-box small a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-logo img {
+  width: 70px;            /* chỉnh kích thước theo ý */
+  margin-bottom: 15px;
+  border-radius: 50%;     /* bo tròn logo */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Forgot password form */
+.forgot-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+}
+
+.forgot-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 450px;
+}
+
+.forgot-box h3 {
+  font-weight: 600;
+  color: #333;
+}
+
+input.form-control {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+button[type="submit"] {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.forgot-box small a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Reset password form */
+.reset-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+}
+
+.reset-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 450px;
+}
+
+.reset-box h3 {
+  font-weight: 600;
+  color: #333;
+}
+
+.reset-box .form-control {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.reset-box button {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* Specialty list */
+.specialty-table-wrapper {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.specialty-table-wrapper h3 {
+  font-weight: 600;
+  color: #1e88e5;
+}
+
+.specialty-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* tạo khoảng cách giữa các hàng */
+}
+
+.specialty-table thead th {
+  background: #f5f6fa;
+  font-weight: 600;
+  padding: 12px;
+  color: #555;
+  text-transform: uppercase;
+  font-size: 13px;
+  border: none;
+}
+
+.specialty-table tbody tr {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.specialty-table tbody td {
+  padding: 12px;
+  vertical-align: middle;
+  border-top: 1px solid #eee;
+}
+
+.specialty-table tbody tr:hover {
+  background: #f0f7ff;
+}
+
+.specialty-table .btn-sm {
+  padding: 5px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+.specialty-table .btn-warning {
+  background-color: #ffb74d;
+  border: none;
+}
+
+.specialty-table .btn-danger {
+  background-color: #e53935;
+  border: none;
+}
+
+/* Hospital list */
+.hospital-table-wrapper {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.hospital-table-wrapper h3 {
+  font-weight: 600;
+  color: #2e7d32; /* xanh lá để phân biệt với chuyên khoa */
+}
+
+.hospital-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.hospital-table thead th {
+  background: #f5f6fa;
+  font-weight: 600;
+  padding: 12px;
+  color: #444;
+  text-transform: uppercase;
+  font-size: 13px;
+  border: none;
+}
+
+.hospital-table tbody tr {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.hospital-table tbody td {
+  padding: 12px;
+  vertical-align: middle;
+  border-top: 1px solid #eee;
+}
+
+.hospital-table tbody tr:hover {
+  background: #f1f8f6; /* xanh lá nhạt khi hover */
+}
+
+.hospital-table .btn-sm {
+  padding: 5px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+.hospital-table .btn-warning {
+  background-color: #ffb74d;
+  border: none;
+}
+
+.hospital-table .btn-danger {
+  background-color: #e53935;
+  border: none;
+}
+
+/* Form thêm chuyên khoa */
+.specialty-form-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.specialty-form-wrapper h3 {
+  font-weight: 600;
+  color: #1565c0; /* xanh dương đậm */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.specialty-form-wrapper .form-label {
+  font-weight: 500;
+  color: #333;
+}
+
+.specialty-form-wrapper .form-control {
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.specialty-form-wrapper .form-control:focus {
+  border-color: #1565c0;
+  box-shadow: 0 0 4px rgba(21,101,192,0.3);
+}
+
+.specialty-form-wrapper textarea {
+  resize: vertical;
+}
+
+.specialty-form-wrapper .btn-success {
+  background-color: #2e7d32;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+}
+
+.specialty-form-wrapper .btn-secondary {
+  margin-left: 10px;
+  padding: 8px 20px;
+  border-radius: 8px;
+}
+
+/* Form thêm/sửa bệnh viện */
+.hospital-form-wrapper {
+  max-width: 650px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.hospital-form-wrapper h3 {
+  font-weight: 600;
+  color: #2e7d32; /* xanh lá đậm */
+  margin-bottom: 20px;
+}
+
+.hospital-form-wrapper .form-label {
+  font-weight: 500;
+  color: #444;
+}
+
+.hospital-form-wrapper .form-control {
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.hospital-form-wrapper .form-control:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 5px rgba(46,125,50,0.3);
+}
+
+.hospital-form-wrapper textarea {
+  resize: vertical;
+}
+
+.hospital-form-wrapper .btn-success {
+  background-color: #2e7d32;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+}
+
+.hospital-form-wrapper .btn-primary {
+  background-color: #1565c0;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+}
+
+.hospital-form-wrapper .btn-secondary {
+  margin-left: 10px;
+  padding: 8px 20px;
+  border-radius: 8px;
+}
+
+/* Vùng danh sách bác sĩ */
+.doctor-list-wrapper {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* Tiêu đề */
+.doctor-list-wrapper h3 {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Bảng */
+.doctor-table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.doctor-table thead {
+  background: #1976d2;
+  color: #fff;
+}
+
+.doctor-table th {
+  font-weight: 500;
+  padding: 12px;
+}
+
+.doctor-table td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+/* Link giấy phép */
+.license-link {
+  color: #1565c0;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.license-link:hover {
+  text-decoration: underline;
+}
+
+/* Badge trạng thái */
+.badge {
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+/* Nút hành động */
+.action-buttons .btn-action {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-buttons .btn-success {
+  background-color: #2e7d32;
+  border: none;
+}
+
+.action-buttons .btn-danger {
+  background-color: #c62828;
+  border: none;
+}

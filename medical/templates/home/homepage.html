@@ -1,0 +1,114 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content container">
+        <!-- Text -->
+        <div class="hero-text">
+            <h4>HỆ THỐNG ĐẶT LỊCH KHÁM TRỰC TUYẾN</h4>
+            <h1>MEDICAL<br><span>SCHEDULE SYSTEM</span></h1>
+            <p>
+                Đặt lịch khám bệnh nhanh chóng, quản lý hồ sơ sức khỏe tiện lợi,
+                và theo dõi kết quả trực tuyến chỉ với vài thao tác.
+            </p>
+            <a href="" class="btn btn-primary btn-lg">Xem thêm</a>
+        </div>
+
+        <!-- Image -->
+        <div class="hero-image">
+            <img src="{{ url_for('static', filename='images/logo_fb.png') }}" alt="Medical system">
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features py-5">
+    <div class="container text-center">
+        <h2 class="mb-5">Tại sao chọn hệ thống của chúng tôi?</h2>
+        <div class="row">
+            <div class="col-md-4 feature-box">
+                <div class="icon-circle">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h4>Đặt lịch nhanh chóng</h4>
+                <p>Chỉ vài thao tác để chọn bác sĩ, chọn giờ khám và xác nhận lịch hẹn.</p>
+            </div>
+            <div class="col-md-4 feature-box">
+                <div class="icon-circle">
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                <h4>Quản lý hồ sơ</h4>
+                <p>Hồ sơ sức khỏe được lưu trữ tập trung, dễ dàng truy cập và cập nhật.</p>
+            </div>
+            <div class="col-md-4 feature-box">
+                <div class="icon-circle">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h4>Theo dõi kết quả</h4>
+                <p>Xem lại lịch sử khám, kết quả xét nghiệm và tiến trình điều trị mọi lúc.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials py-5">
+    <div class="container text-center">
+        <h2 class="mb-5">Đánh giá từ người dùng</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="testimonial-box">
+                    <p>"Ứng dụng giúp tôi đặt lịch khám cho cả gia đình rất dễ dàng. Không còn cảnh xếp hàng chờ đợi
+                        nữa."</p>
+                    <h5>Nguyễn Văn A</h5>
+                    <span>Bệnh nhân</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-box">
+                    <p>"Tôi có thể theo dõi hồ sơ sức khỏe của mình trực tuyến, mọi thông tin đều rõ ràng và an
+                        toàn."</p>
+                    <h5>Trần Thị B</h5>
+                    <span>Nhân viên văn phòng</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-box">
+                    <p>"Hệ thống giúp tôi tiết kiệm rất nhiều thời gian. Rất chuyên nghiệp và thân thiện."</p>
+                    <h5>Lê Minh C</h5>
+                    <span>Doanh nhân</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Partners -->
+<section class="partners py-5">
+    <div class="container text-center">
+        <h2 class="mb-5">Đối tác y tế</h2>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-6 col-md-3 mb-4">
+                <img src="{{ url_for('static', filename='images/hospital1.png') }}" alt="Hospital 1"
+                     class="partner-logo">
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <img src="{{ url_for('static', filename='images/hospital2.png') }}" alt="Hospital 2"
+                     class="partner-logo">
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <img src="{{ url_for('static', filename='images/hospital3.png') }}" alt="Hospital 3"
+                     class="partner-logo">
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <img src="{{ url_for('static', filename='images/hospital4.png') }}" alt="Hospital 4"
+                     class="partner-logo">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

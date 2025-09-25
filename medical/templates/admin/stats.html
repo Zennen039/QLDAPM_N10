@@ -1,0 +1,69 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Thống kê admin{% endblock %}
+
+{% block content %}
+<div class="container my-4 col-lg-10">
+    <h2 class="text-center text-primary mb-4">Thống kê hệ thống</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
+                <h5>Tổng cuộc hẹn</h5>
+                <h2 class="text-success">{{ stats.total_appointments }}</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
+                <h5>Tổng người dùng</h5>
+                <h2 class="text-info">{{ stats.total_users }}</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4 p-3 text-center">
+                <h5>Tổng doanh thu</h5>
+                <h2 class="text-warning">{{ stats.total_revenue }} VND</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doanh thu theo tháng -->
+    <div class="card shadow-sm border-0 rounded-4 p-3">
+        <h5>Doanh thu theo tháng</h5>
+        <canvas id="revenueChart" height="150"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+    const labels = {{ stats.revenue_by_month | map(attribute=0) | list | safe }};
+    const data = {{ stats.revenue_by_month | map(attribute=1) | list | safe }};
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Doanh thu (VND)',
+                data: data,
+                backgroundColor: 'rgba(255, 206, 86, 0.4)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+{% endblock %}

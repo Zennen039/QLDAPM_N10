@@ -1,0 +1,142 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Đăng ký{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <div class="register-box shadow">
+        <!-- Logo -->
+        <div class="register-logo text-center">
+            <img src="{{ url_for('static', filename='images/logo_fb.png') }}" alt="Logo"/>
+        </div>
+
+        <h3 class="text-center mb-4">Đăng ký tài khoản</h3>
+
+        <form method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Họ tên</label>
+                    <input type="text" name="full_name" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Ngày sinh</label>
+                    <input type="date" name="date_of_birth" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Giới tính</label>
+                    <select name="gender" class="form-select">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Địa chỉ</label>
+                    <input type="text" name="address" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Số điện thoại</label>
+                    <input pattern="[0]{1}[0-9]{9}" type="text" name="phone" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Tên đăng nhập</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Mật khẩu</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Xác nhận mật khẩu</label>
+                <input type="password" name="confirm_password" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Vai trò</label>
+                <select name="user_role" class="form-select">
+                    <option value="PATIENT">Bệnh nhân</option>
+                    <option value="DOCTOR">Bác sĩ</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Ảnh đại diện</label>
+                <input type="file" name="avatar" class="form-control">
+            </div>
+
+            <!-- Chỉ hiện khi chọn bác sĩ -->
+            <div class="doctor-only">
+                <div class="mb-3">
+                    <label class="form-label">Bằng cấp học thuật</label>
+                    <input type="text" name="academic_degree" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Chuyên khoa</label>
+                    <select name="specialty_id" class="form-select">
+                        <option value="">--Chọn chuyên khoa--</option>
+                        {% for s in specialties %}
+                        <option value="{{ s.id }}">{{ s.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nơi công tác (Bệnh viện)</label>
+                    <select name="hospital_id" class="form-select">
+                        <option value="">--Chọn bệnh viện--</option>
+                        {% for h in hospitals %}
+                        <option value="{{ h.id }}">{{ h.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Giấy phép hành nghề</label>
+                    <input type="file" name="license_file" class="form-control">
+                </div>
+            </div>
+
+            {% if err_msg %}
+            <div class="alert alert-danger">{{ err_msg }}</div>
+            {% endif %}
+            {% if success_msg %}
+            <div class="alert alert-success">{{ success_msg }}</div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <small>Bạn đã có tài khoản? <a href="{{ url_for('login_page') }}">Đăng nhập</a></small>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const roleSelect = document.querySelector('select[name="user_role"]');
+      const doctorFields = document.querySelectorAll('.doctor-only');
+
+      function toggleDoctorFields() {
+        doctorFields.forEach(div => {
+          div.style.display = (roleSelect.value === 'DOCTOR') ? 'block' : 'none';
+        });
+      }
+
+      toggleDoctorFields();
+      roleSelect.addEventListener('change', toggleDoctorFields);
+    });
+</script>
+{% endblock %}

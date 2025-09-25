@@ -1,0 +1,48 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Quản lý chuyên khoa{% endblock %}
+
+{% block content %}
+<div class="specialty-table-wrapper">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Danh sách chuyên khoa</h3>
+        <a href="{{ url_for('add_specialty') }}" class="btn btn-primary">+ Thêm chuyên khoa</a>
+    </div>
+
+    <table class="table specialty-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Mô tả</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for s in specialties %}
+        <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.name }}</td>
+            <td>{{ s.description }}</td>
+            {% if current_user.is_authenticated and current_user.user_role.value == 3 %}
+            <td>
+                <a href="{{ url_for('edit_specialty', id=s.id) }}" class="btn btn-sm btn-warning">Sửa</a>
+                <form method="post" action="{{ url_for('delete_specialty', id=s.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger"
+                            onclick="return confirm('Xóa chuyên khoa này?')">Xóa
+                    </button>
+                </form>
+            </td>
+            {% endif %}
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4" class="text-center">Chưa có chuyên khoa nào.</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Quay lại</a>
+</div>
+{% endblock %}

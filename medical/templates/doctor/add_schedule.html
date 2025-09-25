@@ -1,0 +1,52 @@
+{% extends 'layout/base.html' %}
+{% block title %}Tạo lịch làm việc{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="h3 text-center mb-4">Tạo Lịch Làm Việc</h1>
+
+                    <form action="{{ url_for('doctor_add_schedules') }}" method="post">
+                        <!-- Ngày -->
+                        <div class="mb-3 row">
+                            <label for="date" class="col-sm-4 col-form-label text-end">Ngày</label>
+                            <div class="col-sm-8">
+                                <input type="date" id="date" name="date" required
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Giờ bắt đầu -->
+                        <div class="mb-3 row">
+                            <label for="start_time" class="col-sm-4 col-form-label text-end">Giờ Bắt Đầu</label>
+                            <div class="col-sm-8">
+                                <input type="time" id="start_time" name="start_time" required
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Giờ kết thúc -->
+                        <div class="mb-4 row">
+                            <label for="end_time" class="col-sm-4 col-form-label text-end">Giờ Kết Thúc</label>
+                            <div class="col-sm-8">
+                                <input type="time" id="end_time" name="end_time" required
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Nút submit -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Thêm Lịch
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

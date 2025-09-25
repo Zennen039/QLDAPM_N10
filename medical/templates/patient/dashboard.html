@@ -1,0 +1,218 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Patient - Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-stethoscope"></i> TDA HealthCare Booking
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a href="{{ url_for('specialties_list') }}">
+                <i class="fa fa-heartbeat" aria-hidden="true"></i> Xem chuyên khoa</a>
+            </li>
+
+            <li><a href="{{ url_for('search') }}">
+                <i class="fa fa-search" aria-hidden="true"></i> Tìm kiếm</a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('choose_doctor') }}">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Đặt lịch khám
+                </a>
+            </li>
+
+            <li><a href="{{ url_for('patient_appointments') }}">
+                <i class="fa fa-calendar" aria-hidden="true"></i> Xem lịch hẹn</a>
+            </li>
+
+            <li><a href="{{ url_for('patient_payments') }}">
+                <i class="fa fa-credit-card" aria-hidden="true"></i> Lịch sử thanh toán</a>
+            </li>
+
+            <li><a href="{{ url_for('patient_profile') }}">
+                <i class="fa fa-id-card" aria-hidden="true"></i> Hồ sơ cá nhân</a>
+            </li>
+
+            <li><a href="{{ url_for('patient_ratings') }}">
+                <i class="fa fa-star" aria-hidden="true"></i> Đánh giá
+            </a></li>
+
+            <li><a href="{{ url_for('logout') }}">
+                <i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+            </li>
+        </ul>
+
+        <div class="user-profile">
+            <img src="{{ current_user.avatar }}" alt="Patient">
+            <div>
+                <p>{{ current_user.full_name }}</p>
+                <span>{{ current_user.email }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="main-content">
+        <div class="topbar">
+            <h2>Good Morning, {{ current_user.full_name }}</h2>
+            <div class="topbar-actions btn btn-warning">
+                <a href="{{ url_for('notifications') }}">
+                    <i class="fa fa-bell" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="card">
+                <h4>Total Patients</h4>
+                <p class="value">600</p>
+                <span class="positive">+15%</span>
+            </div>
+            <div class="card">
+                <h4>Total Appointment</h4>
+                <p class="value">25</p>
+                <span class="positive">+10%</span>
+            </div>
+            <div class="card">
+                <h4>Total Income</h4>
+                <p class="value">$7,590.00</p>
+                <span class="positive">+21%</span>
+            </div>
+            <div class="card">
+                <h4>Total Treatments</h4>
+                <p class="value">342</p>
+                <span class="positive">+18%</span>
+            </div>
+        </div>
+
+        <!-- Overview & Appointments -->
+        <div class="overview-section">
+            <div class="overview">
+                <h3>Overview</h3>
+                <canvas id="overviewChart" height="250"></canvas>
+            </div>
+            <div class="appointments">
+                <h3>Appointment List</h3>
+                <ul>
+                    <li><img src="https://i.pravatar.cc/40?img=12"> John Smith <span>Today 15:30</span></li>
+                    <li><img src="https://i.pravatar.cc/40?img=23"> Henry <span>Today 17:00</span></li>
+                    <li><img src="https://i.pravatar.cc/40?img=35"> Olivia <span>Today 18:30</span></li>
+                    <li><img src="https://i.pravatar.cc/40?img=41"> Adam <span>Tomorrow 10:30</span></li>
+                    <li><img src="https://i.pravatar.cc/40?img=45"> Clara <span>Tomorrow 10:30</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Patient List -->
+        <div class="patient-list">
+            <h3>Patient List</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Age</th>
+                    <th>Department</th>
+                    <th>Patient ID</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>John Smith</td>
+                    <td>Male</td>
+                    <td>25 years old</td>
+                    <td>25 years old</td>
+                    <td>Koch and Sons</td>
+                    <td>+2025001</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>Henry</td>
+                    <td>Male</td>
+                    <td>30 years old</td>
+                    <td>30 years old</td>
+                    <td>Dermatology</td>
+                    <td>+2025002</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>Olivia</td>
+                    <td>Female</td>
+                    <td>20 years old</td>
+                    <td>20 years old</td>
+                    <td>Olivia</td>
+                    <td>+2025003</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>Adam</td>
+                    <td>Female</td>
+                    <td>28 years old</td>
+                    <td>28 years old</td>
+                    <td>Harber Inc</td>
+                    <td>+2025004</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chart JS -->
+<script>
+    const ctx = document.getElementById('overviewChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        datasets: [
+          {
+            label: 'Hospitalized patients',
+            data: [40, 28, 25, 18, 12, 5, 20],
+            borderColor: '#0d47a1',
+            backgroundColor: 'rgba(13,71,161,0.1)',
+            tension: 0.4,
+            fill: true
+          },
+          {
+            label: 'Outpatients',
+            data: [28, 32, 55, 30, 10, 35, 28],
+            borderColor: '#1e88e5',
+            backgroundColor: 'rgba(30,136,229,0.1)',
+            tension: 0.4,
+            fill: true
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              usePointStyle: true,
+              boxWidth: 8
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 10 }
+          }
+        }
+      }
+    });
+</script>
+{% endblock %}
