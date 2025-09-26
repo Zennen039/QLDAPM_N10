@@ -872,14 +872,14 @@ def admin_statistics():
     return render_template("admin/stats.html", stats=stats)
 
 
-@app.route('/notis', methods=["GET"])
+@app.route("/notis", methods=["GET"])
 @login_required
 def notifications():
     notifs = dao.get_notifications(current_user.id)
     return render_template('home/notifications.html', notifs=notifs)
 
 
-@app.route('/notis/<int:notification_id>/read', methods=["POST"])
+@app.route("/notis/<int:notification_id>/read", methods=["POST"])
 @login_required
 def mark_notification(notification_id):
     try:
