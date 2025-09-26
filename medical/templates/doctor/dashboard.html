@@ -49,7 +49,7 @@
     <!-- Main -->
     <div class="main-content">
         <div class="topbar">
-            <h2>Good Morning, {{ current_user.full_name }}</h2>
+            <h2>Xin chào, {{ current_user.full_name }}</h2>
             <div class="topbar-actions btn btn-warning">
                 <a href="{{ url_for('notifications') }}">
                     <i class="fa fa-bell" aria-hidden="true"></i>
@@ -60,18 +60,18 @@
         <!-- Stats Cards -->
         <div class="stats">
             <div class="card">
-                <h4>Total Patients</h4>
+                <h4>Tổng bệnh nhân</h4>
                 <p class="value">{{ stats.total_patients }}</p>
             </div>
             <div class="card">
-                <h4>Completed Appointments</h4>
+                <h4>Cuộc hẹn đã hoàn thành</h4>
                 <p class="value">{{ stats.completed_appointments or stats.total_patients }}</p>
             </div>
         </div>
 
         <!-- Common Diseases -->
         <div class="common-diseases">
-            <h3>Common Diseases</h3>
+            <h3>Bệnh phổ biến</h3>
             <ul>
                 {% for disease, count in stats.common_diseases %}
                 <li>{{ disease }} - {{ count }} cases</li>
@@ -82,12 +82,12 @@
         <!-- Appointment Stats Chart -->
         <div class="overview-section">
             <div class="overview">
-                <h3>Appointments by Month</h3>
+                <h3>Cuộc hẹn theo tháng</h3>
                 <canvas id="appointmentsChart" height="250"></canvas>
             </div>
 
             <div class="appointments">
-                <h3>Recent Appointments</h3>
+                <h3>Cuộc hẹn gần đây</h3>
                 <ul>
                     {% for appt in stats.recent_appointments %}
                     <li>

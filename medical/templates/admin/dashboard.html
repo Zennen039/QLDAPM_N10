@@ -30,7 +30,7 @@
     <!-- Main -->
     <div class="main-content">
         <div class="topbar">
-            <h2>Good Morning, {{ current_user.full_name }}</h2>
+            <h2>Xin chào, {{ current_user.full_name }}</h2>
             <div class="topbar-actions btn btn-warning">
                 <a href="{{ url_for('notifications') }}"><i class="fa fa-bell"></i></a>
             </div>
@@ -39,15 +39,15 @@
         <!-- Stats Cards -->
         <div class="stats">
             <div class="card">
-                <h4>Total Patients</h4>
+                <h4>Tổng bệnh nhân</h4>
                 <p class="value">{{ stats.total_users }}</p>
             </div>
             <div class="card">
-                <h4>Total Appointments</h4>
+                <h4>Tổng lịch hẹn</h4>
                 <p class="value">{{ stats.total_appointments }}</p>
             </div>
             <div class="card">
-                <h4>Total Income</h4>
+                <h4>Tổng thu nhập</h4>
                 <p class="value">${{ "{:,.2f}".format(stats.total_revenue) }}</p>
             </div>
         </div>
@@ -55,12 +55,12 @@
         <!-- Overview Chart -->
         <div class="overview-section">
             <div class="overview">
-                <h3>Revenue by Month</h3>
+                <h3>Thống kê theo tháng</h3>
                 <canvas id="overviewChart" height="250"></canvas>
             </div>
 
             <div class="appointments">
-                <h3>Recent Appointments</h3>
+                <h3>Cuộc hẹn sắp tới</h3>
                 <ul>
                     {% for appt in stats.recent_appointments %}
                     <li>
@@ -74,7 +74,7 @@
 
         <!-- Patient List -->
         <div class="patient-list">
-            <h3>Patient List</h3>
+            <h3>Danh sách bệnh nhân</h3>
             <table>
                 <thead>
                 <tr>

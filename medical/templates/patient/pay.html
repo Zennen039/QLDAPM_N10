@@ -25,7 +25,9 @@
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button type="button" onclick="pay()" class="btn btn-success">
+                        <button type="button" id="btn-pay" onclick="pay()" class="btn btn-success"
+                                data-appointment-id="{{ appointment.id }}"
+                                data-redirect-url="{{ url_for('patient_dashboard') }}">
                             Xác nhận thanh toán
                         </button>
 

@@ -26,19 +26,31 @@ function submitReject(doctorId) {
 
 function pay() {
   const method = document.getElementById('payment_method').value;
+  const btn = document.getElementById('btn-pay');
+  const appointmentId = btn.dataset.appointmentId;      // lấy appointment id
+  const redirectUrl = btn.dataset.redirectUrl;
 
   if (!confirm("Bạn chắc chắn thanh toán không?")) return;
 
-  fetch(`/api/patient/{{ appointment.id }}/pay`, {
+  fetch(`/api/patient/${appointmentId}/pay`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ payment_method: method })
   })
-  .then(res => res.json())
+  .then(async res => {
+    const contentType = res.headers.get('content-type') || '';
+    // không phải JSON thì đọc text để không quăng lỗi
+    if (!contentType.includes('application/json')) {
+      const text = await res.text();
+      throw new Error('Server trả về không phải JSON: ' + text.substring(0,100));
+    }
+    // là JSON thì trả về như bình thường
+    return res.json();
+  })
   .then(data => {
     if (data.status === 200) {
       alert("Thanh toán thành công!");
-      location.href = "{{ url_for('patient_dashboard') }}";
+      location.href = redirectUrl;
     } else {
       alert("Lỗi: " + data.message);
     }

@@ -37,9 +37,13 @@
                 <i class="fa fa-id-card" aria-hidden="true"></i> Hồ sơ cá nhân</a>
             </li>
 
+            <li><a href="{{ url_for('rating_list') }}">
+                <i class="fa fa-check-circle" aria-hidden="true"></i> Lịch hẹn hoàn thành</a>
+            </li>
+
             <li><a href="{{ url_for('patient_ratings') }}">
-                <i class="fa fa-star" aria-hidden="true"></i> Đánh giá
-            </a></li>
+                <i class="fa fa-star" aria-hidden="true"></i> Đánh giá</a>
+            </li>
 
             <li><a href="{{ url_for('logout') }}">
                 <i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
@@ -58,7 +62,7 @@
     <!-- Main -->
     <div class="main-content">
         <div class="topbar">
-            <h2>Good Morning, {{ current_user.full_name }}</h2>
+            <h2>Xin chào, {{ current_user.full_name }}</h2>
             <div class="topbar-actions btn btn-warning">
                 <a href="{{ url_for('notifications') }}">
                     <i class="fa fa-bell" aria-hidden="true"></i>
@@ -69,22 +73,25 @@
         <!-- Stats -->
         <div class="stats">
             <div class="card">
-                <h4>Total Patients</h4>
+                <h4>Tổng bệnh nhân</h4>
                 <p class="value">600</p>
                 <span class="positive">+15%</span>
             </div>
+
             <div class="card">
-                <h4>Total Appointment</h4>
+                <h4>Tổng số lịch hẹn</h4>
                 <p class="value">25</p>
                 <span class="positive">+10%</span>
             </div>
+
             <div class="card">
-                <h4>Total Income</h4>
+                <h4>Tổng thu nhập</h4>
                 <p class="value">$7,590.00</p>
                 <span class="positive">+21%</span>
             </div>
+
             <div class="card">
-                <h4>Total Treatments</h4>
+                <h4>Tổng số lần khám</h4>
                 <p class="value">342</p>
                 <span class="positive">+18%</span>
             </div>
@@ -93,11 +100,12 @@
         <!-- Overview & Appointments -->
         <div class="overview-section">
             <div class="overview">
-                <h3>Overview</h3>
+                <h3>Biểu đồ</h3>
                 <canvas id="overviewChart" height="250"></canvas>
             </div>
+
             <div class="appointments">
-                <h3>Appointment List</h3>
+                <h3>Cuộc hẹn sắp tới</h3>
                 <ul>
                     <li><img src="https://i.pravatar.cc/40?img=12"> John Smith <span>Today 15:30</span></li>
                     <li><img src="https://i.pravatar.cc/40?img=23"> Henry <span>Today 17:00</span></li>
@@ -110,7 +118,7 @@
 
         <!-- Patient List -->
         <div class="patient-list">
-            <h3>Patient List</h3>
+            <h3>Danh sách bác sĩ</h3>
             <table>
                 <thead>
                 <tr>
